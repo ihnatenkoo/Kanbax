@@ -8,9 +8,8 @@ defmodule Kanbax.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      {Registry, keys: :unique, name: Kanbax.TaskRegistry}
-      # Starts a worker by calling: Kanbax.Worker.start_link(arg)
-      # {Kanbax.Worker, arg}
+      {Registry, keys: :unique, name: Kanbax.TaskRegistry},
+      Kanbax.TaskManager
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
