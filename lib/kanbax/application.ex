@@ -8,6 +8,7 @@ defmodule Kanbax.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      {Registry, keys: :unique, name: Kanbax.TaskRegistry}
       # Starts a worker by calling: Kanbax.Worker.start_link(arg)
       # {Kanbax.Worker, arg}
     ]

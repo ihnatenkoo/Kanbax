@@ -7,20 +7,19 @@ defmodule Kanbax.TaskFSM do
 
   alias Kanbax.Data.Task
 
-  def start_link(%Task{state: "idle"} = task) do
-    GenServer.start_link(__MODULE__, task, name: __MODULE__)
+  def start_link(%Task{state: "idle", title: title} = task) do
+    GenServer.start_link(__MODULE__, task, name: {:via, Registry, {Kanbax.TaskRegistry, title}})
   end
 
-  @spec start(atom() | pid() | {atom(), any()} | {:via, atom(), any()}) :: any()
-  def start(pid \\ __MODULE__) do
+  def start(pid) do
     GenServer.call(pid, {:transition, :start})
   end
 
-  def finish(pid \\ __MODULE__) do
+  def finish(pid) do
     GenServer.call(pid, {:transition, :finish})
   end
 
-  def state(pid \\ __MODULE__) do
+  def state(pid) do
     GenServer.call(pid, :state)
   end
 
