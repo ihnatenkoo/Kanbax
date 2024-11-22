@@ -9,7 +9,7 @@ defmodule Kanbax.Application do
   def start(_type, _args) do
     children = [
       {Registry, keys: :unique, name: Kanbax.TaskRegistry},
-      Kanbax.TaskManager
+      Kanbax.Main
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
