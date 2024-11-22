@@ -26,7 +26,7 @@ defmodule Kanbax.TaskManager do
   end
 
   def create_task(title, due_days, project_title) do
-    Task.create(title, due_days, project_title)
-    |> create_task()
+    {:ok, task} = Task.create(title, due_days, project_title)
+    create_task(task)
   end
 end

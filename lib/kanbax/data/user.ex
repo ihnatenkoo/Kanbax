@@ -2,6 +2,7 @@ defmodule Kanbax.Data.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Kanbax.Repo
   alias Kanbax.Data.{Task, User}
 
   schema "users" do
@@ -13,9 +14,8 @@ defmodule Kanbax.Data.User do
 
   def changeset(user, params) do
     user
-    |> cast(params, ~w[name password]a)
-    |> cast_embed(:tasks, with: &Task.changeset/2)
-    |> validate_required(~w[name]a)
+    |> cast(params, [:name, :password])
+    |> validate_required([:name, :password])
   end
 
   def create(params) when is_list(params), do: params |> Map.new() |> create()
@@ -25,21 +25,7 @@ defmodule Kanbax.Data.User do
     |> changeset(params)
     |> case do
       %Ecto.Changeset{valid?: false, errors: errors} -> {:error, errors}
-      changeset -> apply_changes(changeset)
+      changeset -> Repo.insert(changeset)
     end
-  end
-
-  def create_default do
-    create(
-      name: "am",
-      password: "pwd",
-      tasks: [
-        %{
-          title: "Task1",
-          due: DateTime.add(DateTime.utc_now(), 5, :day),
-          project: %{title: "Project1"}
-        }
-      ]
-    )
   end
 end
