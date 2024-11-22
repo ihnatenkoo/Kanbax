@@ -4,11 +4,11 @@ defmodule Kanbax.Data.User do
 
   alias Kanbax.Data.{Task, User}
 
-  @primary_key false
-  embedded_schema do
+  schema "users" do
     field(:name, :string)
     field(:password, :string, redact: true)
-    embeds_many(:tasks, Task)
+    has_many(:tasks, Task)
+    timestamps(type: :utc_datetime)
   end
 
   def changeset(user, params) do

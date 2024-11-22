@@ -2,16 +2,17 @@ defmodule Kanbax.Data.Task do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Kanbax.Data.{Project, Task}
+  alias Kanbax.Data.{Project, Task, User}
 
-  @primary_key false
-  embedded_schema do
+  schema "tasks" do
     field(:title, :string)
     field(:description, :string)
     field(:state, :string, default: "idle")
     field(:time_spent, :integer, default: 0)
     field(:due, :utc_datetime)
-    embeds_one(:project, Project)
+    belongs_to(:project, Project)
+    belongs_to(:user, User)
+    timestamps(type: :utc_datetime)
   end
 
   def changeset(task, params) do
