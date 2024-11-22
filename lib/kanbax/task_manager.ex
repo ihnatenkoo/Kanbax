@@ -12,7 +12,7 @@ defmodule Kanbax.TaskManager do
     DynamicSupervisor.init(strategy: :one_for_one)
   end
 
-  def start_task(%Task{} = task) do
+  def create_task(%Task{} = task) do
     Kanbax.TaskManager
     |> DynamicSupervisor.start_child({Kanbax.TaskFSM, task})
     |> case do
@@ -25,8 +25,8 @@ defmodule Kanbax.TaskManager do
     end
   end
 
-  def start_task(title, due_days, project_title) do
+  def create_task(title, due_days, project_title) do
     Task.create(title, due_days, project_title)
-    |> start_task()
+    |> create_task()
   end
 end
