@@ -9,6 +9,7 @@ defmodule Kanbax.Application do
   def start(_type, _args) do
     children = [
       {Registry, keys: :unique, name: Kanbax.TaskRegistry},
+      Kanbax.Repo,
       Kanbax.Main
     ]
 

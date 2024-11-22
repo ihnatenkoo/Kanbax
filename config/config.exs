@@ -9,4 +9,6 @@ config :kanbax, Kanbax.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
-config :kanbax, ecto_repos: [Kanbax.Repo]
+config :kanbax,
+  ecto_repos: [Kanbax.Repo],
+  generators: [timestamp_type: :utc_datetime]
