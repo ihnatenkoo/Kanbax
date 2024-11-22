@@ -16,8 +16,12 @@ defmodule Kanbax.TaskManager do
     Kanbax.TaskManager
     |> DynamicSupervisor.start_child({Kanbax.TaskFSM, task})
     |> case do
-      {:ok, pid} -> pid
-      {:error, {:already_started, pid}} -> pid
+      {:ok, pid} ->
+        Kanbax.State.put(task.title, task.state)
+        pid
+
+      {:error, {:already_started, pid}} ->
+        pid
     end
   end
 
