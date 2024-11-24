@@ -6,8 +6,8 @@ defmodule Kanbax do
   alias Kanbax.TaskFSM
   alias Kanbax.TaskManager
 
-  def create_task(title, due_days, project_title) do
-    TaskManager.create_task(title, due_days, project_title)
+  def create_task(project_id, title, due_days, description) do
+    TaskManager.create_task(project_id, title, due_days, description)
   end
 
   def start_task(task_id) do

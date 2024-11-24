@@ -18,16 +18,17 @@ defmodule Kanbax.Data.Task do
 
   def changeset(task, params) do
     task
-    |> cast(params, ~w[title description due]a)
-    |> validate_required(~w[title due]a)
+    |> cast(params, ~w[title description due project_id]a)
+    |> validate_required(~w[title due project_id]a)
     |> validate_inclusion(:state, ["idle", "in_progress", "done"])
   end
 
-  def create(title, due_days, description \\ nil) do
+  def create(project_id, title, due_days, description) do
     create(
       title: title,
       description: description,
-      due: DateTime.add(DateTime.utc_now(), due_days, :day)
+      due: DateTime.add(DateTime.utc_now(), due_days, :day),
+      project_id: project_id
     )
   end
 
